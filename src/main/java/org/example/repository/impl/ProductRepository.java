@@ -22,41 +22,45 @@ public class ProductRepository implements AppRepository<Product> {
                      HibernateConfig.getSessionFactory().openSession()) {
             // Транзакція стартує
             transaction = session.beginTransaction();
+            session.persist(product);
+            variant.setProductId(product.getId());
+            session.persist(variant);
+            session.flush();
             // HQL-запит.
             // :[parameter name] - іменований параметр (named parameter),
             // двокрапка перед іменем.
-            String hql = "INSERT INTO Product " +
-                    "(description, title, category, typeId, vendorId, groupById, isWeiged, measureUnit) " +
-                    "VALUES (:description, :title, :category, :typeId, :vendorId, :groupById, :isWeiged, :measureUnit)";
-
-            String hql2 = "INSERT INTO Variant " +
-                    "(media, barcode, leftovers, cost, margin, price, orderLimits, productId) " +
-                    "VALUES (:media, :barcode, :leftovers, :cost, :margin, :price, :orderLimits, :productId)";
-
-            // Створення HQL-запиту
-            MutationQuery query = session.createMutationQuery(hql);
-            // Формування конкретних значень для певного іменованого параметра
-            query.setParameter("description", product.getDescription());
-            query.setParameter("title", product.getTitle());
-            query.setParameter("category", product.getCategory());
-            query.setParameter("typeId", product.getTypeId());
-            query.setParameter("vendorId", product.getVendorId());
-            query.setParameter("groupById", product.getGroupById());
-            query.setParameter("isWeiged", product.getIsWeiged());
-            query.setParameter("measureUnit", product.getMeasureUnit());
-
-            MutationQuery query2 = session.createMutationQuery(hql2);
-            query2.setParameter("media",variant.getMedia());
-            query2.setParameter("barcode",variant.getBarcode());
-            query2.setParameter("leftovers",0);
-            query2.setParameter("cost",variant.getCost());
-            query2.setParameter("margin",variant.getMargin());
-            query2.setParameter("price",variant.getPrice());
-            query2.setParameter("orderLimits",0);
-            query2.setParameter("productId",1);
-            query2.executeUpdate();
-            // Виконання HQL-запиту
-            query.executeUpdate();
+//            String hql = "INSERT INTO Product " +
+//                    "(description, title, category, typeId, vendorId, groupById, isWeiged, measureUnit) " +
+//                    "VALUES (:description, :title, :category, :typeId, :vendorId, :groupById, :isWeiged, :measureUnit)";
+//
+//            String hql2 = "INSERT INTO Variant " +
+//                    "(media, barcode, leftovers, cost, margin, price, orderLimits, productId) " +
+//                    "VALUES (:media, :barcode, :leftovers, :cost, :margin, :price, :orderLimits, :productId)";
+//
+//            // Створення HQL-запиту
+//            MutationQuery query = session.createMutationQuery(hql);
+//            // Формування конкретних значень для певного іменованого параметра
+//            query.setParameter("description", product.getDescription());
+//            query.setParameter("title", product.getTitle());
+//            query.setParameter("category", product.getCategory());
+//            query.setParameter("typeId", product.getTypeId());
+//            query.setParameter("vendorId", product.getVendorId());
+//            query.setParameter("groupById", product.getGroupById());
+//            query.setParameter("isWeiged", product.getIsWeiged());
+//            query.setParameter("measureUnit", product.getMeasureUnit());
+//
+//            MutationQuery query2 = session.createMutationQuery(hql2);
+//            query2.setParameter("media",variant.getMedia());
+//            query2.setParameter("barcode",variant.getBarcode());
+//            query2.setParameter("leftovers",0);
+//            query2.setParameter("cost",variant.getCost());
+//            query2.setParameter("margin",variant.getMargin());
+//            query2.setParameter("price",variant.getPrice());
+//            query2.setParameter("orderLimits",0);
+//            query2.setParameter("productId",1);
+//            query2.executeUpdate();
+//            // Виконання HQL-запиту
+//            query.executeUpdate();
             // Транзакція виконується
             transaction.commit();
             // Повернення повідомлення при безпомилковому

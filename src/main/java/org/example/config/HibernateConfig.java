@@ -1,6 +1,7 @@
 package org.example.config;
 
 import org.example.entities.Product;
+import org.example.entities.Variant;
 import org.example.view.AppView;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -19,6 +20,7 @@ public class HibernateConfig {
             try {
                 Configuration configuration = getConfiguration();
                 configuration.addAnnotatedClass(Product.class);
+                configuration.addAnnotatedClass(Variant.class);
                 ServiceRegistry serviceRegistry =
                         new StandardServiceRegistryBuilder()
                                 .applySettings(configuration.getProperties()).build();
