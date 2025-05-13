@@ -36,7 +36,7 @@ public class HibernateConfig {
         Properties props = new Properties();
         // Формуємо потік (Stream) даних з конфігураційного файлу
         try {
-            props.load(HibernateConfig.class.getResourceAsStream("/app.properties"));
+            props.load(HibernateConfig.class.getResourceAsStream("db/jdbc.properties"));
         } catch (IOException e) {
             // Виведення повідомлення про помилки роботи
             // з БД або конфігураційним файлом
