@@ -36,7 +36,7 @@ public class HibernateConfig {
         Properties props = new Properties();
         // Формуємо потік (Stream) даних з конфігураційного файлу
         try {
-            props.load(HibernateConfig.class.getResourceAsStream("db/jdbc.properties"));
+            props.load(HibernateConfig.class.getClassLoader().getResourceAsStream("db/jdbc.properties"));
         } catch (IOException e) {
             // Виведення повідомлення про помилки роботи
             // з БД або конфігураційним файлом
@@ -44,7 +44,7 @@ public class HibernateConfig {
         }
         props.put(Environment.JAKARTA_JDBC_DRIVER, props.getProperty("dbDriver"));
         props.put(Environment.JAKARTA_JDBC_URL, props.getProperty("dbUrl"));
-        props.put(Environment.JAKARTA_JDBC_USER, props.getProperty("username"));
+        props.put(Environment.JAKARTA_JDBC_USER, props.getProperty("userName"));
         props.put(Environment.JAKARTA_JDBC_PASSWORD, props.getProperty("password"));
         props.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
         configuration.setProperties(props);
