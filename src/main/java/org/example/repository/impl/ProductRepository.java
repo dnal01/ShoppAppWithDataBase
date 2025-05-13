@@ -28,9 +28,11 @@ public class ProductRepository implements AppRepository<Product> {
             String hql = "INSERT INTO Product " +
                     "(description, title, category, typeId, vendorId, groupById, isWeiged, measureUnit) " +
                     "VALUES (:description, :title, :category, :typeId, :vendorId, :groupById, :isWeiged, :measureUnit)";
+
             String hql2 = "INSERT INTO Variant " +
                     "(media, barcode, leftovers, cost, margin, price, orderLimits, productId) " +
                     "VALUES (:media, :barcode, :leftovers, :cost, :margin, :price, :orderLimits, :productId)";
+
             // Створення HQL-запиту
             MutationQuery query = session.createMutationQuery(hql);
             // Формування конкретних значень для певного іменованого параметра
@@ -52,10 +54,9 @@ public class ProductRepository implements AppRepository<Product> {
             query2.setParameter("price",variant.getPrice());
             query2.setParameter("orderLimits",0);
             query2.setParameter("productId",1);
-
+            query2.executeUpdate();
             // Виконання HQL-запиту
             query.executeUpdate();
-            query2.executeUpdate();
             // Транзакція виконується
             transaction.commit();
             // Повернення повідомлення при безпомилковому
@@ -110,8 +111,8 @@ public class ProductRepository implements AppRepository<Product> {
                 // :[parameter name] - іменований параметр (named parameter),
                 // двокрапка перед іменем.
                 String hql = "UPDATE Product " +
-                        "SET description = :description, title = :title, category = :category, typeId = :typeId, vendorId = :vendorId, groupById = :groupById, isWeiged = :isWeiged, measureUnit = :measureUnit," +
-                        "WHERE id = :id";
+                        "SET description = :description, title = :title, category = :category, typeId = :typeId, vendorId = :vendorId, groupById = :groupById, isWeiged = :isWeiged," +
+                        "measureUnit = :measureUnit WHERE id = :id";
                 // Створення HQL-запиту
                 MutationQuery query = session.createMutationQuery(hql);
                 // Формування конкретних значень для певного іменованого параметра

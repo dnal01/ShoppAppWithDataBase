@@ -2,10 +2,7 @@ package org.example.controller;
 
 import org.example.services.ProductService;
 import org.example.utils.AppStarter;
-import org.example.view.ProductCreateView;
-import org.example.view.ProductDeleteView;
-import org.example.view.ProductReadByIdView;
-import org.example.view.ProductUpdateView;
+import org.example.view.*;
 
 public class ProductController {
     ProductService service = new ProductService();
@@ -17,7 +14,7 @@ public class ProductController {
     }
 
     public void read() {
-        ProductDeleteView view = new ProductDeleteView();
+        ProductReadView view = new ProductReadView();
         view.getOutput(service.read());
         AppStarter.startApp();
     }
