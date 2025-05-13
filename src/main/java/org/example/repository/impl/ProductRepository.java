@@ -46,12 +46,12 @@ public class ProductRepository implements AppRepository<Product> {
             MutationQuery query2 = session.createMutationQuery(hql2);
             query2.setParameter("media",variant.getMedia());
             query2.setParameter("barcode",variant.getBarcode());
-            query2.setParameter("leftovers",variant.getLeftovers());
+            query2.setParameter("leftovers",0);
             query2.setParameter("cost",variant.getCost());
             query2.setParameter("margin",variant.getMargin());
             query2.setParameter("price",variant.getPrice());
-            query2.setParameter("orderLimits",variant.getOrderLimits());
-            query2.setParameter("productId",product.getId());
+            query2.setParameter("orderLimits",0);
+            query2.setParameter("productId",1);
 
             // Виконання HQL-запиту
             query.executeUpdate();

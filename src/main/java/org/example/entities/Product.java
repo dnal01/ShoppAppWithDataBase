@@ -1,14 +1,29 @@
 package org.example.entities;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "products")
 public class Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
+    @Column(name = "description")
     private String description;
+    @Column(name = "title")
     private String title;
+    @Column(name = "category")
     private String category;
+    @Column(name = "type_id")
     private int typeId;
+    @Column(name = "vendor_id")
     private int vendorId;
+    @Column(name = "group_by_id")
     private int groupById;
+    @Column(name = "is_weighed")
     private boolean isWeiged;
+    @Column(name = "measure")
     private String measureUnit;
 
     public Product() {

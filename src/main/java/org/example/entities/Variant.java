@@ -1,14 +1,29 @@
 package org.example.entities;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "variants")
 public class Variant {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
+    @Column(name = "media")
     private String media;
+    @Column(name = "barcode")
     private int barcode;
+    @Column(name = "leftovers")
     private int leftovers;
+    @Column(name = "cost")
     private double cost;
+    @Column(name = "margin")
     private double margin;
+    @Column(name = "price")
     private double price;
+    @Column(name = "order_limits")
     private int orderLimits;
+    @Column(name = "product_id")
     private int productId;
 
     public Variant() {
