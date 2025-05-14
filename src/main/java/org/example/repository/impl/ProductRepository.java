@@ -23,7 +23,7 @@ public class ProductRepository implements AppRepository<Product> {
             // Транзакція стартує
             transaction = session.beginTransaction();
             session.persist(product);
-//            variant.setProductId(product.getId());
+            variant.setProduct(product);
             session.persist(variant);
             session.flush();
             // HQL-запит.

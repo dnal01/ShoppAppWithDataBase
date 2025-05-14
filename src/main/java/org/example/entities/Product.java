@@ -2,6 +2,7 @@ package org.example.entities;
 
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -27,8 +28,8 @@ public class Product {
     private boolean isWeiged;
     @Column(name = "measure")
     private String measureUnit;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
-    private Set<Variant> variants;
+    @OneToMany(mappedBy = "product")
+    private List<Variant> variants;
 
     public Product() {
     }
@@ -98,5 +99,11 @@ public class Product {
     }
     public void setMeasureUnit(String measureUnit) {
         this.measureUnit = measureUnit;
+    }
+    @Override
+    public String toString() {
+        return  "id " + id +
+                ", " + description + " " + title +
+                ", " + measureUnit + "\n";
     }
 }
