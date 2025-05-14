@@ -6,10 +6,10 @@ import org.example.entities.Variant;
 import java.util.List;
 import java.util.Optional;
 
-public interface AppRepository<T> {
+public interface AppRepository<T, S> {
 
 
-    String add(Product product, Variant variant);
+    String add(T product, S variant);
 
     Optional<List<T>> read();
     Optional<T> readById(int id);

@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-public class ProductRepository implements AppRepository<Product> {
+public class ProductRepository implements AppRepository<Product, Variant> {
     @Override
     public String add(Product product, Variant variant) {
         Transaction transaction = null;
