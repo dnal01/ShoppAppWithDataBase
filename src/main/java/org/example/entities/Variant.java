@@ -23,8 +23,11 @@ public class Variant {
     private double price;
     @Column(name = "order_limits")
     private int orderLimits;
-    @Column(name = "product_id")
-    private int productId;
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
+//    @Column(name = "product_id")
+//    private int productId;
 
     public Variant() {
     }
@@ -37,7 +40,7 @@ public class Variant {
         this.margin = margin;
         this.price = price;
         this.orderLimits = orderLimits;
-        this.productId = productId;
+//        this.productId = productId;
     }
     public int getId() {
         return id;

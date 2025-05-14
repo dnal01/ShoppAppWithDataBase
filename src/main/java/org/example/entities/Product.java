@@ -2,6 +2,8 @@ package org.example.entities;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "products")
 public class Product {
@@ -25,6 +27,8 @@ public class Product {
     private boolean isWeiged;
     @Column(name = "measure")
     private String measureUnit;
+    @OneToMany(mappedBy = "product")
+    private Set<Variant> variants;
 
     public Product() {
     }
