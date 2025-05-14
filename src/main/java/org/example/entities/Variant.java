@@ -23,7 +23,7 @@ public class Variant {
     private double price;
     @Column(name = "order_limits")
     private int orderLimits;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;
 //    @Column(name = "product_id")
@@ -90,10 +90,10 @@ public class Variant {
     public void setOrderLimits(int orderLimits) {
         this.orderLimits = orderLimits;
     }
-    public int getProductId() {
-        return productId;
-    }
-    public void setProductId(int productId) {
-        this.productId = productId;
-    }
+//    public int getProductId() {
+//        return productId;
+//    }
+//    public void setProductId(int productId) {
+//        this.productId = productId;
+//    }
 }

@@ -23,7 +23,7 @@ public class ProductRepository implements AppRepository<Product> {
             // Транзакція стартує
             transaction = session.beginTransaction();
             session.persist(product);
-            variant.setProductId(product.getId());
+//            variant.setProductId(product.getId());
             session.persist(variant);
             session.flush();
             // HQL-запит.
@@ -80,17 +80,11 @@ public class ProductRepository implements AppRepository<Product> {
     public Optional<List<Product>> read() {
         try (Session session =
                      HibernateConfig.getSessionFactory().openSession()) {
-            Transaction transaction;
-            // Транзакція стартує
-            transaction = session.beginTransaction();
-            // Формування колекції даними з БД через HQL-запит
+
             List<Product> list =
                     session.createQuery("FROM Product", Product.class)
                             .list();
-            // Транзакція виконується
-            transaction.commit();
-            // Повернення результату транзакції
-            // Повертаємо Optional-контейнер з колецією даних
+
             return Optional.of(list);
         } catch (Exception e) {
             // Якщо помилка повертаємо порожній Optional-контейнер
@@ -191,21 +185,13 @@ public class ProductRepository implements AppRepository<Product> {
         Optional<Product> optional;
         try (Session session =
                      HibernateConfig.getSessionFactory().openSession()) {
-            // Транзакція стартує
-            transaction = session.beginTransaction();
-            // HQL-запит.
-            // :[parameter name] - іменований параметр (named parameter),
-            // двокрапка перед іменем.
+
             String hql = " FROM Product c WHERE c.id = :id";
             // Створюємо запит
             Query<Product> query = session.createQuery(hql, Product.class);
             query.setParameter("id", id);
             // Намагаємося отримати об'єкт за id
             optional = query.uniqueResultOptional();
-            // Транзакція виконується
-            transaction.commit();
-            // Повернення результату транзакції
-            // Повертаємо Optional-контейнер з об'єктом
             return optional;
         } catch (Exception e) {
             if (transaction != null) {

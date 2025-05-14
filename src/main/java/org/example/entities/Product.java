@@ -27,7 +27,7 @@ public class Product {
     private boolean isWeiged;
     @Column(name = "measure")
     private String measureUnit;
-    @OneToMany(mappedBy = "product")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
     private Set<Variant> variants;
 
     public Product() {
