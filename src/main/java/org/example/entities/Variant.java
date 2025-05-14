@@ -12,7 +12,7 @@ public class Variant {
     @Column(name = "media")
     private String media;
     @Column(name = "barcode")
-    private int barcode;
+    private long barcode;
     @Column(name = "leftovers")
     private int leftovers;
     @Column(name = "cost")
@@ -54,10 +54,10 @@ public class Variant {
     public void setMedia(String media) {
         this.media = media;
     }
-    public int getBarcode() {
+    public long getBarcode() {
         return barcode;
     }
-    public void setBarcode(int barcode) {
+    public void setBarcode(long barcode) {
         this.barcode = barcode;
     }
     public int getLeftovers() {
