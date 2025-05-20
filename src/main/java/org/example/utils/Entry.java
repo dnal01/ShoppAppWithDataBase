@@ -18,23 +18,6 @@ public enum Entry {
     WRONG_PRICE_MSG("Wrong price input"),
     WRONG_ORDER_LIMITS_MSG("Wrong orderLimits input");
 
-    private String description;
-    private String title;
-    private String category;
-    private int typeId;
-    private int vendorId;
-    private int groupById;
-    private boolean isWeiged;
-    private String measureUnit;
-    private String media;
-    private int barcode;
-    private int leftovers;
-    private double cost;
-    private double margin;
-    private double price;
-    private int orderLimits;
-    private int productId;
-
     private final String message;
 
     Entry(String message) {

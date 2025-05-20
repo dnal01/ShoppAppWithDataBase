@@ -12,8 +12,4 @@ import org.junit.platform.suite.api.Suite;
         "ProductRepositoryTest"
 })
 public class TestSuitePackagesExclude {
-
-
-
-
 }
