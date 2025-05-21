@@ -62,7 +62,7 @@ public class ProductRepository implements AppRepository<Product, Variant> {
 //            query2.executeUpdate();
 //            query.executeUpdate();
             transaction.commit();
-
+            LOGGER.info(Status.DATA_INSERT_MSG.getMessage());
             return Status.DATA_INSERT_MSG.getMessage();
         } catch (Exception e) {
             if (transaction != null) {
