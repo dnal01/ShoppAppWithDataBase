@@ -5,7 +5,8 @@ public enum ErrorMessage {
     INPUT_REQ_MSG("Input required."),
     INCORRECT_VALUE_MSG("Incorrect value! Try again."),
     INCORRECT_OPTION_MSG("Incorrect option! Try again."),
-    DATA_ABSENT_MSG("Data is absent.");
+    DATA_ABSENT_MSG("Data is absent."),
+    DB_ABSENT_MSG("Database is absent.");
     private final String message;
 
     ErrorMessage(String message) {

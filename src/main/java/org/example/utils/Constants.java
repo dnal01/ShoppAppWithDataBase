@@ -1,7 +1,7 @@
 package org.example.utils;
 
 public enum Constants {
-    BASE_PATH_LOGS_CONFIG("src/main/resources/config/logs.properties"),
+    BASE_PATH_LOGS_CONFIG("src/main/resources/config/"),
     BASE_PATH_INFO_LOGS("MY_LOGS/");
     private final String value;
 

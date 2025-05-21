@@ -12,23 +12,25 @@ import org.hibernate.query.Query;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 
 public class ProductRepository implements AppRepository<Product, Variant> {
+
+    private final static String TABLE_CONTACTS = "products";
+    private static final Logger LOGGER =
+            Logger.getLogger(ProductRepository.class.getName());
+
     @Override
     public String add(Product product, Variant variant) {
         Transaction transaction = null;
         try (Session session =
                      HibernateConfig.getSessionFactory().openSession()) {
-            // Транзакція стартує
             transaction = session.beginTransaction();
             session.persist(product);
             variant.setProduct(product);
             session.persist(variant);
             session.flush();
-            // HQL-запит.
-            // :[parameter name] - іменований параметр (named parameter),
-            // двокрапка перед іменем.
 //            String hql = "INSERT INTO Product " +
 //                    "(description, title, category, typeId, vendorId, groupById, isWeiged, measureUnit) " +
 //                    "VALUES (:description, :title, :category, :typeId, :vendorId, :groupById, :isWeiged, :measureUnit)";
@@ -37,9 +39,7 @@ public class ProductRepository implements AppRepository<Product, Variant> {
 //                    "(media, barcode, leftovers, cost, margin, price, orderLimits, productId) " +
 //                    "VALUES (:media, :barcode, :leftovers, :cost, :margin, :price, :orderLimits, :productId)";
 //
-//            // Створення HQL-запиту
 //            MutationQuery query = session.createMutationQuery(hql);
-//            // Формування конкретних значень для певного іменованого параметра
 //            query.setParameter("description", product.getDescription());
 //            query.setParameter("title", product.getTitle());
 //            query.setParameter("category", product.getCategory());
@@ -59,19 +59,14 @@ public class ProductRepository implements AppRepository<Product, Variant> {
 //            query2.setParameter("orderLimits",0);
 //            query2.setParameter("productId",1);
 //            query2.executeUpdate();
-//            // Виконання HQL-запиту
 //            query.executeUpdate();
-            // Транзакція виконується
             transaction.commit();
-            // Повернення повідомлення при безпомилковому
-            // виконанні транзакції
+
             return Status.DATA_INSERT_MSG.getMessage();
         } catch (Exception e) {
             if (transaction != null) {
-                // Відкочення поточної транзакції ресурсу
                 transaction.rollback();
             }
-            // Повернення повідомлення про помилку роботи з БД
             return e.getMessage();
         }
     }
@@ -87,33 +82,23 @@ public class ProductRepository implements AppRepository<Product, Variant> {
 
             return Optional.of(list);
         } catch (Exception e) {
-            // Якщо помилка повертаємо порожній Optional-контейнер
             return Optional.empty();
         }
     }
 
     @Override
     public String update(Product product) {
-        // Спершу перевіряємо наявність об'єкта в БД за таким id.
-        // Якщо ні, повертаємо повідомлення про відсутність таких даних,
-        // інакше оновлюємо відповідний об'єкт в БД
         if (readById(product.getId()).isEmpty()) {
             return Status.DATA_ABSENT_MSG.getMessage();
         } else {
             Transaction transaction = null;
             try (Session session =
                          HibernateConfig.getSessionFactory().openSession()) {
-                // Транзакция стартует
                 transaction = session.beginTransaction();
-                // HQL-запит.
-                // :[parameter name] - іменований параметр (named parameter),
-                // двокрапка перед іменем.
                 String hql = "UPDATE Product " +
                         "SET description = :description, title = :title, category = :category, typeId = :typeId, vendorId = :vendorId, groupById = :groupById, isWeiged = :isWeiged," +
                         "measureUnit = :measureUnit WHERE id = :id";
-                // Створення HQL-запиту
                 MutationQuery query = session.createMutationQuery(hql);
-                // Формування конкретних значень для певного іменованого параметра
                 query.setParameter("description", product.getDescription());
                 query.setParameter("title", product.getTitle());
                 query.setParameter("category", product.getCategory());
@@ -122,19 +107,13 @@ public class ProductRepository implements AppRepository<Product, Variant> {
                 query.setParameter("groupById", product.getGroupById());
                 query.setParameter("isWeiged", product.getIsWeiged());
                 query.setParameter("measureUnit", product.getMeasureUnit());
-                // Виконання HQL-запиту
                 query.executeUpdate();
-                // Транзакція виконується
                 transaction.commit();
-                // Повернення повідомлення при безпомилковому
-                // виконанні транзакції
                 return Status.DATA_UPDATE_MSG.getMessage();
             } catch (Exception e) {
                 if (transaction != null) {
-                    // Відкочення поточної транзакції ресурсу
                     transaction.rollback();
                 }
-                // Повернення повідомлення про помилку роботи з БД
                 return e.getMessage();
             }
         }
@@ -142,38 +121,23 @@ public class ProductRepository implements AppRepository<Product, Variant> {
 
     @Override
     public String delete(int id) {
-        // Спершу перевіряємо наявність об'єкта в БД за таким id.
-        // Якщо ні, повертаємо повідомлення про відсутність таких даних,
-        // інакше видаляємо відповідний об'єкт із БД
         if (readById(id).isEmpty()) {
             return Status.DATA_ABSENT_MSG.getMessage();
         } else {
             Transaction transaction = null;
             try (Session session =
                          HibernateConfig.getSessionFactory().openSession()) {
-                // Транзакція стартує
                 transaction = session.beginTransaction();
-                // HQL-запит.
-                // :[parameter name] - іменований параметр (named parameter),
-                // двокрапка перед іменем.
                 String hql = "DELETE FROM Product WHERE id = :id";
-                // Створення HQL-запиту
                 MutationQuery query = session.createMutationQuery(hql);
-                // Формування конкретних значень для певного іменованого параметра
                 query.setParameter("id", id);
-                // Виконання HQL-запиту
                 query.executeUpdate();
-                // Транзакція виконується
                 transaction.commit();
-                // Повернення повідомлення при безпомилковому
-                // виконанні транзакції
                 return Status.DATA_DELETE_MSG.getMessage();
             } catch (Exception e) {
                 if (transaction != null) {
-                    // Відкочення поточної транзакції ресурсу
                     transaction.rollback();
                 }
-                // Повернення повідомлення про помилку роботи з БД
                 return e.getMessage();
             }
         }
@@ -187,27 +151,21 @@ public class ProductRepository implements AppRepository<Product, Variant> {
                      HibernateConfig.getSessionFactory().openSession()) {
 
             String hql = " FROM Product c WHERE c.id = :id";
-            // Створюємо запит
             Query<Product> query = session.createQuery(hql, Product.class);
             query.setParameter("id", id);
-            // Намагаємося отримати об'єкт за id
             optional = query.uniqueResultOptional();
             return optional;
         } catch (Exception e) {
             if (transaction != null) {
-                // Відкочення поточної транзакції ресурсу
                 transaction.rollback();
             }
-            // Якщо помилка повертаємо порожній Optional-контейнер
             return Optional.empty();
         }
     }
 
-    // Перевірка наявності об'єкту/сутності за певним id у БД
     private boolean isEntityWithSuchIdExists(Product product) {
         try (Session session =
                      HibernateConfig.getSessionFactory().openSession()) {
-            // Перевірка наявності об'єкту за певним id
             product = session.get(Product.class, product.getId());
             if (product != null) {
                 Query<Product> query =

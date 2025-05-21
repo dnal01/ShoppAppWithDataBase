@@ -12,8 +12,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Logger;
 
 public class ProductService {
+
+    private static final Logger LOGGER =
+            Logger.getLogger(ProductService.class.getName());
+
     ProductRepository repository = new ProductRepository();
 
     public String add(Map<String, String> data) {
@@ -22,6 +27,7 @@ public class ProductService {
             try {
                 throw new ProductException("Check inputs", errors);
             } catch (ProductException e) {
+//                LOGGER.err(ErrorMessage.DB_ABSENT_MSG);
                 return e.getErrors(errors);
             }
         }

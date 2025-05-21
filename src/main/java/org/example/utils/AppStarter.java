@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.logging.*;
 
 public class AppStarter {
-    private static final Logger LOGGER = Logger.getLogger(AppStarter.class.getName());
+//    private static final Logger LOGGER = Logger.getLogger(AppStarter.class.getName());
 
 
     public static void startApp() {
