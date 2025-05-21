@@ -1,5 +1,7 @@
 package org.example.services;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.example.entities.Product;
 import org.example.entities.VariantMapper;
 import org.example.utils.AppValidator;
@@ -12,12 +14,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Logger;
 
 public class ProductService {
 
     private static final Logger LOGGER =
-            Logger.getLogger(ProductService.class.getName());
+            LogManager.getLogger(ProductService.class);
 
     ProductRepository repository = new ProductRepository();
 
@@ -27,7 +28,7 @@ public class ProductService {
             try {
                 throw new ProductException("Check inputs", errors);
             } catch (ProductException e) {
-//                LOGGER.err(ErrorMessage.DB_ABSENT_MSG);
+                LOGGER.warn(ErrorMessage.LOG_DATA_INPTS_WRONG_MSG);
                 return e.getErrors(errors);
             }
         }
@@ -53,8 +54,15 @@ public class ProductService {
                                 .append(product.toString())
                 );
                 return "\nPRODUCTS:\n" + stringBuilder;
-            } else return ErrorMessage.DATA_ABSENT_MSG.getMessage();
-        } else return ErrorMessage.DATA_ABSENT_MSG.getMessage();
+            } else {
+                LOGGER.warn(ErrorMessage.LOG_DATA_INPTS_WRONG_MSG);
+
+                return ErrorMessage.DATA_ABSENT_MSG.getMessage();
+            }
+        } else {
+            LOGGER.warn(ErrorMessage.LOG_DATA_INPTS_WRONG_MSG);
+            return ErrorMessage.DATA_ABSENT_MSG.getMessage();
+        }
     }
 
     public String update(Map<String, String> data) {
@@ -64,6 +72,7 @@ public class ProductService {
             try {
                 throw new ProductException("Check inputs", errors);
             } catch (ProductException e) {
+                LOGGER.warn(ErrorMessage.LOG_DATA_INPTS_WRONG_MSG);
                 return e.getErrors(errors);
             }
         }
@@ -77,6 +86,7 @@ public class ProductService {
             try {
                 throw new ProductException("Check inputs", errors);
             } catch (ProductException e) {
+                LOGGER.warn(ErrorMessage.LOG_DATA_INPTS_WRONG_MSG);
                 return e.getErrors(errors);
             }
         }
@@ -90,6 +100,7 @@ public class ProductService {
             try {
                 throw new ProductException("Check inputs", errors);
             } catch (ProductException e) {
+                LOGGER.warn(ErrorMessage.LOG_DATA_INPTS_WRONG_MSG);
                 return e.getErrors(errors);
             }
         }
@@ -102,6 +113,9 @@ public class ProductService {
             // Отримуємо об'єкт з Optional
             Product product = optional.get();
             return "\nPRODUCT: " + product + "\n";
-        } else return ErrorMessage.DATA_ABSENT_MSG.getMessage();
+        } else {
+            LOGGER.warn(ErrorMessage.LOG_DATA_INPTS_WRONG_MSG.getMessage());
+            return ErrorMessage.DATA_ABSENT_MSG.getMessage();
+        }
     }
 }

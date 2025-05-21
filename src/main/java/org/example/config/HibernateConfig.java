@@ -1,7 +1,10 @@
 package org.example.config;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.example.entities.Product;
 import org.example.entities.Variant;
+import org.example.utils.ErrorMessage;
 import org.example.view.AppView;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -13,6 +16,10 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class HibernateConfig {
+
+    private static final Logger LOGGER =
+            LogManager.getLogger(HibernateConfig.class);
+
     private static SessionFactory sessionFactory;
 
     public static SessionFactory getSessionFactory() {
@@ -27,6 +34,7 @@ public class HibernateConfig {
                 sessionFactory = configuration
                         .buildSessionFactory(serviceRegistry);
             } catch (Exception e) {
+                LOGGER.error(ErrorMessage.LOG_DB_ERROR_MSG.getMessage());
                 new AppView().getOutput(e.getMessage());
             }
         }
@@ -40,6 +48,8 @@ public class HibernateConfig {
         try {
             props.load(HibernateConfig.class.getClassLoader().getResourceAsStream("db/jdbc.properties"));
         } catch (IOException e) {
+            LOGGER.error(ErrorMessage.LOG_DB_ERROR_MSG.getMessage());
+
             // Виведення повідомлення про помилки роботи
             // з БД або конфігураційним файлом
             new AppView().getOutput(e.getMessage());

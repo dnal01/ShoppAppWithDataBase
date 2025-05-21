@@ -6,6 +6,9 @@ public enum ErrorMessage {
     INCORRECT_VALUE_MSG("Incorrect value! Try again."),
     INCORRECT_OPTION_MSG("Incorrect option! Try again."),
     DATA_ABSENT_MSG("Data is absent."),
+    LOG_DATA_INPTS_WRONG_MSG("Data inputs incorrect."),
+    LOG_DATA_ABSENT_MSG("Data is absent."),
+    LOG_DB_ERROR_MSG("DB manipulations error."),
     DB_ABSENT_MSG("Database is absent.");
     private final String message;
 

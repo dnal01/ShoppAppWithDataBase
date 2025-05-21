@@ -1,9 +1,12 @@
 package org.example.repository.impl;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.example.config.HibernateConfig;
 import org.example.entities.Product;
 import org.example.entities.Variant;
 import org.example.repository.AppRepository;
+import org.example.utils.ErrorMessage;
 import org.example.utils.Status;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -12,14 +15,12 @@ import org.hibernate.query.Query;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 
 public class ProductRepository implements AppRepository<Product, Variant> {
 
-    private final static String TABLE_CONTACTS = "products";
     private static final Logger LOGGER =
-            Logger.getLogger(ProductRepository.class.getName());
+            LogManager.getLogger(ProductRepository.class);
 
     @Override
     public String add(Product product, Variant variant) {
@@ -66,6 +67,7 @@ public class ProductRepository implements AppRepository<Product, Variant> {
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
+                LOGGER.warn(ErrorMessage.LOG_DB_ERROR_MSG.getMessage());
             }
             return e.getMessage();
         }
@@ -82,6 +84,7 @@ public class ProductRepository implements AppRepository<Product, Variant> {
 
             return Optional.of(list);
         } catch (Exception e) {
+            LOGGER.warn(ErrorMessage.LOG_DB_ERROR_MSG.getMessage());
             return Optional.empty();
         }
     }
@@ -109,10 +112,12 @@ public class ProductRepository implements AppRepository<Product, Variant> {
                 query.setParameter("measureUnit", product.getMeasureUnit());
                 query.executeUpdate();
                 transaction.commit();
+                LOGGER.info(Status.DATA_UPDATE_MSG.getMessage());
                 return Status.DATA_UPDATE_MSG.getMessage();
             } catch (Exception e) {
                 if (transaction != null) {
                     transaction.rollback();
+                    LOGGER.warn(ErrorMessage.LOG_DB_ERROR_MSG.getMessage());
                 }
                 return e.getMessage();
             }
@@ -122,6 +127,7 @@ public class ProductRepository implements AppRepository<Product, Variant> {
     @Override
     public String delete(int id) {
         if (readById(id).isEmpty()) {
+            LOGGER.warn(ErrorMessage.LOG_DB_ERROR_MSG.getMessage());
             return Status.DATA_ABSENT_MSG.getMessage();
         } else {
             Transaction transaction = null;
@@ -137,6 +143,7 @@ public class ProductRepository implements AppRepository<Product, Variant> {
             } catch (Exception e) {
                 if (transaction != null) {
                     transaction.rollback();
+                    LOGGER.warn(ErrorMessage.LOG_DB_ERROR_MSG.getMessage());
                 }
                 return e.getMessage();
             }
@@ -158,6 +165,7 @@ public class ProductRepository implements AppRepository<Product, Variant> {
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
+                LOGGER.warn(ErrorMessage.LOG_DB_ERROR_MSG.getMessage());
             }
             return Optional.empty();
         }
