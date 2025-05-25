@@ -46,3 +46,62 @@
 	Minimum pool size: 1
 	Maximum pool size: 20
 2025-05-21 14:20:01.466 [main] INFO  o.e.r.impl.ProductRepository - Created.
+2025-05-25 11:13:47.212 [main] INFO  o.h.Version - HHH000412: Hibernate ORM core version 6.6.6.Final
+2025-05-25 11:13:47.236 [main] INFO  o.h.c.internal.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-05-25 11:13:47.275 [main] WARN  o.h.o.connections.pooling - HHH10001002: Using built-in connection pool (not intended for production use)
+2025-05-25 11:13:47.314 [main] WARN  o.h.e.jdbc.env.internal.JdbcEnvironmentInitiator - HHH000342: Could not obtain connection to query metadata
+java.lang.IllegalStateException: Cannot get a connection as the driver manager is not properly initialized
+	at org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl.getConnection(DriverManagerConnectionProviderImpl.java:255) ~[hibernate-core-6.6.6.Final.jar:6.6.6.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess.obtainConnection(JdbcEnvironmentInitiator.java:467) ~[hibernate-core-6.6.6.Final.jar:6.6.6.Final]
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcIsolationDelegate.delegateWork(JdbcIsolationDelegate.java:61) ~[hibernate-core-6.6.6.Final.jar:6.6.6.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.getJdbcEnvironmentUsingJdbcMetadata(JdbcEnvironmentInitiator.java:320) [hibernate-core-6.6.6.Final.jar:6.6.6.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:129) [hibernate-core-6.6.6.Final.jar:6.6.6.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:81) [hibernate-core-6.6.6.Final.jar:6.6.6.Final]
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.initiateService(StandardServiceRegistryImpl.java:130) [hibernate-core-6.6.6.Final.jar:6.6.6.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:263) [hibernate-core-6.6.6.Final.jar:6.6.6.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:238) [hibernate-core-6.6.6.Final.jar:6.6.6.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:215) [hibernate-core-6.6.6.Final.jar:6.6.6.Final]
+	at org.hibernate.service.ServiceRegistry.requireService(ServiceRegistry.java:68) [hibernate-core-6.6.6.Final.jar:6.6.6.Final]
+	at org.hibernate.engine.jdbc.internal.JdbcServicesImpl.configure(JdbcServicesImpl.java:52) [hibernate-core-6.6.6.Final.jar:6.6.6.Final]
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.configureService(StandardServiceRegistryImpl.java:136) [hibernate-core-6.6.6.Final.jar:6.6.6.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:247) [hibernate-core-6.6.6.Final.jar:6.6.6.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:215) [hibernate-core-6.6.6.Final.jar:6.6.6.Final]
+	at org.hibernate.engine.jdbc.connections.internal.BasicConnectionCreator.convertSqlException(BasicConnectionCreator.java:133) [hibernate-core-6.6.6.Final.jar:6.6.6.Final]
+	at org.hibernate.engine.jdbc.connections.internal.DriverConnectionCreator.makeConnection(DriverConnectionCreator.java:43) [hibernate-core-6.6.6.Final.jar:6.6.6.Final]
+	at org.hibernate.engine.jdbc.connections.internal.BasicConnectionCreator.createConnection(BasicConnectionCreator.java:61) [hibernate-core-6.6.6.Final.jar:6.6.6.Final]
+	at org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl$PooledConnections.addConnections(DriverManagerConnectionProviderImpl.java:507) [hibernate-core-6.6.6.Final.jar:6.6.6.Final]
+	at org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl$PooledConnections.<init>(DriverManagerConnectionProviderImpl.java:380) [hibernate-core-6.6.6.Final.jar:6.6.6.Final]
+	at org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl$PooledConnections$Builder.build(DriverManagerConnectionProviderImpl.java:558) [hibernate-core-6.6.6.Final.jar:6.6.6.Final]
+	at org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl.buildPool(DriverManagerConnectionProviderImpl.java:107) [hibernate-core-6.6.6.Final.jar:6.6.6.Final]
+	at org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl.configure(DriverManagerConnectionProviderImpl.java:87) [hibernate-core-6.6.6.Final.jar:6.6.6.Final]
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.configureService(StandardServiceRegistryImpl.java:136) [hibernate-core-6.6.6.Final.jar:6.6.6.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:247) [hibernate-core-6.6.6.Final.jar:6.6.6.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:215) [hibernate-core-6.6.6.Final.jar:6.6.6.Final]
+	at org.hibernate.service.ServiceRegistry.requireService(ServiceRegistry.java:68) [hibernate-core-6.6.6.Final.jar:6.6.6.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.buildJdbcConnectionAccess(JdbcEnvironmentInitiator.java:434) [hibernate-core-6.6.6.Final.jar:6.6.6.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.getJdbcEnvironmentUsingJdbcMetadata(JdbcEnvironmentInitiator.java:305) [hibernate-core-6.6.6.Final.jar:6.6.6.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:129) [hibernate-core-6.6.6.Final.jar:6.6.6.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:81) [hibernate-core-6.6.6.Final.jar:6.6.6.Final]
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.initiateService(StandardServiceRegistryImpl.java:130) [hibernate-core-6.6.6.Final.jar:6.6.6.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:263) [hibernate-core-6.6.6.Final.jar:6.6.6.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:238) [hibernate-core-6.6.6.Final.jar:6.6.6.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:215) [hibernate-core-6.6.6.Final.jar:6.6.6.Final]
+	at org.hibernate.boot.model.relational.Database.<init>(Database.java:45) [hibernate-core-6.6.6.Final.jar:6.6.6.Final]
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.getDatabase(InFlightMetadataCollectorImpl.java:226) [hibernate-core-6.6.6.Final.jar:6.6.6.Final]
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.<init>(InFlightMetadataCollectorImpl.java:194) [hibernate-core-6.6.6.Final.jar:6.6.6.Final]
+	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.complete(MetadataBuildingProcess.java:171) [hibernate-core-6.6.6.Final.jar:6.6.6.Final]
+	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.build(MetadataBuildingProcess.java:129) [hibernate-core-6.6.6.Final.jar:6.6.6.Final]
+	at org.hibernate.boot.internal.MetadataBuilderImpl.build(MetadataBuilderImpl.java:449) [hibernate-core-6.6.6.Final.jar:6.6.6.Final]
+	at org.hibernate.boot.internal.MetadataBuilderImpl.build(MetadataBuilderImpl.java:101) [hibernate-core-6.6.6.Final.jar:6.6.6.Final]
+	at org.hibernate.cfg.Configuration.buildSessionFactory(Configuration.java:949) [hibernate-core-6.6.6.Final.jar:6.6.6.Final]
+	at org.server.config.HibernateConfig.getSessionFactory(HibernateConfig.java:35) [classes/:?]
+	at org.server.repository.impl.ProductRepository.read(ProductRepository.java:79) [classes/:?]
+	at org.server.services.ProductService.read(ProductService.java:40) [classes/:?]
+	at org.server.controller.ProductController.read(ProductController.java:18) [classes/:?]
+	at org.server.services.AppService.handleOption(AppService.java:15) [classes/:?]
+	at org.server.controller.AppController.runApp(AppController.java:15) [classes/:?]
+	at org.server.utils.AppStarter.startApp(AppStarter.java:37) [classes/:?]
+	at org.server.Main.main(Main.java:7) [classes/:?]
+2025-05-25 11:13:47.317 [main] ERROR o.s.c.HibernateConfig - DB manipulations error.
+2025-05-25 11:13:47.317 [main] WARN  o.s.r.impl.ProductRepository - DB manipulations error.
+2025-05-25 11:13:47.317 [main] WARN  o.s.s.ProductService - LOG_DATA_INPTS_WRONG_MSG
