@@ -60,4 +60,5 @@
 
 #product-list tr:nth-child(even) {
     background-color: darkslategray;
+    color: white;
 }
