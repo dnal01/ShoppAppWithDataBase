@@ -7,11 +7,9 @@ let product = {
     productQuantity: 0,
     productBrand: ""
 };
-let products;
 
 function addNewProduct(e) {
     e.preventDefault();
-    let string;
     product.productName = document.getElementById("product-name").value;
     product.productPrice = document.getElementById("product-price").value;
     product.productDescription = document.getElementById("product-description").value;
@@ -22,12 +20,11 @@ function addNewProduct(e) {
     printProducts();
 }
 function printProducts() {
-    let string = "";
-    var table = document.getElementById("product-list");
-    var row = document.createElement('tr');
+    let table = document.getElementById("product-list");
+    let row = document.createElement('tr');
 
     for (let key in product) {
-        var cell = document.createElement('td');
+        let cell = document.createElement('td');
         cell.innerHTML = product[key];
         row.appendChild(cell);
     }
