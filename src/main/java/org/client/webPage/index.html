@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="author" content="denys.nalbat">
+    <meta name="keywords" content="Shop, E-commerce, Groceries">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <title>Brand name</title>
+</head>
+<body>
+    <section>
+        <div>
+            <form class="add-product-form" action="/abc/product" method="post" onsubmit="addNewProduct(event);">
+                <fieldset>
+                    <legend>New product</legend>
+                    <input type="text" placeholder="Product name" autofocus required id="product-name">
+                    <input type="number" placeholder="Product price" required id="product-price">
+                    <input type="text" placeholder="Product description" required id="product-description">
+                    <input type="text" placeholder="Product image" id="product-image">
+                    <input type="text" placeholder="Product category" required id="product-category">
+                    <input type="number" placeholder="Product quantity" required id="product-quantity">
+                    <input type="text" placeholder="Product brand" required id="product-brand">
+                </fieldset>
+                <button type="submit">Add</button>
+            </form>
+        </div>
+    </section>
+    <section>
+        <table id="product-list">
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Description</th>
+                <th>Image</th>
+                <th>Category</th>
+                <th>Quantity</th>
+                <th>Brand</th>
+            </tr>
+        </table>
+    </section>
+<script src="script.js"></script>
+</body>
+</html>
