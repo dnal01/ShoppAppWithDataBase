@@ -1,9 +1,14 @@
 package org.server.controller;
 
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
 import org.server.services.ProductService;
 import org.server.utils.AppStarter;
 import org.server.view.*;
 
+@Path("/products")
+@Produces(MediaType.APPLICATION_JSON)
 public class ProductController {
     ProductService service = new ProductService();
 

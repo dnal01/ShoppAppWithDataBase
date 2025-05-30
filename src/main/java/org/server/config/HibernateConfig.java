@@ -18,7 +18,7 @@ import java.util.Properties;
 public class HibernateConfig {
 
     private static final Logger LOGGER =
-            LogManager.getLogger(HibernateConfig.class);
+            LogManager.getLogger(HibernateConfig.class.getName());
 
     private static SessionFactory sessionFactory;
 
@@ -35,7 +35,6 @@ public class HibernateConfig {
                         .buildSessionFactory(serviceRegistry);
             } catch (Exception e) {
                 LOGGER.error(ErrorMessage.LOG_DB_ERROR_MSG.getMessage());
-                new AppView().getOutput(e.getMessage());
             }
         }
         return sessionFactory;
@@ -44,22 +43,18 @@ public class HibernateConfig {
     private static Configuration getConfiguration() {
         Configuration configuration = new Configuration();
         Properties props = new Properties();
-        // Формуємо потік (Stream) даних з конфігураційного файлу
         try {
             props.load(HibernateConfig.class.getClassLoader().getResourceAsStream("db/jdbc.properties"));
+            props.put(Environment.JAKARTA_JDBC_DRIVER, props.getProperty("dbDriver"));
+            props.put(Environment.JAKARTA_JDBC_URL, props.getProperty("dbUrl"));
+            props.put(Environment.JAKARTA_JDBC_USER, props.getProperty("dbUser"));
+            props.put(Environment.JAKARTA_JDBC_PASSWORD, props.getProperty("dbPass"));
+            props.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
+            configuration.setProperties(props);
+            return configuration;
         } catch (IOException e) {
             LOGGER.error(ErrorMessage.LOG_DB_ERROR_MSG.getMessage());
-
-            // Виведення повідомлення про помилки роботи
-            // з БД або конфігураційним файлом
-            new AppView().getOutput(e.getMessage());
+            throw new RuntimeException(e);
         }
-        props.put(Environment.JAKARTA_JDBC_DRIVER, props.getProperty("dbDriver"));
-        props.put(Environment.JAKARTA_JDBC_URL, props.getProperty("dbUrl"));
-        props.put(Environment.JAKARTA_JDBC_USER, props.getProperty("userName"));
-        props.put(Environment.JAKARTA_JDBC_PASSWORD, props.getProperty("password"));
-        props.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
-        configuration.setProperties(props);
-        return configuration;
     }
 }

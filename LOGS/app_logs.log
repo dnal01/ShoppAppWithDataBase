@@ -95,7 +95,7 @@ java.lang.IllegalStateException: Cannot get a connection as the driver manager i
 	at org.hibernate.boot.internal.MetadataBuilderImpl.build(MetadataBuilderImpl.java:101) [hibernate-core-6.6.6.Final.jar:6.6.6.Final]
 	at org.hibernate.cfg.Configuration.buildSessionFactory(Configuration.java:949) [hibernate-core-6.6.6.Final.jar:6.6.6.Final]
 	at org.server.config.HibernateConfig.getSessionFactory(HibernateConfig.java:35) [classes/:?]
-	at org.server.repository.impl.ProductRepository.read(ProductRepository.java:79) [classes/:?]
+	at org.server.repository.product.ProductRepository.read(ProductRepository.java:79) [classes/:?]
 	at org.server.services.ProductService.read(ProductService.java:40) [classes/:?]
 	at org.server.controller.ProductController.read(ProductController.java:18) [classes/:?]
 	at org.server.services.AppService.handleOption(AppService.java:15) [classes/:?]

@@ -1,11 +1,12 @@
-package org.server.repository.impl;
+package org.server.repository.product;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.server.config.HibernateConfig;
+import org.server.dto.ProductDtoRequest;
 import org.server.entities.Product;
 import org.server.entities.Variant;
-import org.server.repository.AppRepository;
+import org.server.repository.BaseRepository;
 import org.server.utils.ErrorMessage;
 import org.server.utils.Status;
 import org.hibernate.Session;
@@ -17,30 +18,30 @@ import java.util.List;
 import java.util.Optional;
 
 
-public class ProductRepository implements AppRepository<Product, Variant> {
+public class ProductRepositoryImp implements ProductRepository {
 
     private static final Logger LOGGER =
-            LogManager.getLogger(ProductRepository.class);
+            LogManager.getLogger(ProductRepositoryImp.class.getName());
 
     @Override
-    public String add(Product product, Variant variant) {
+    public void save(ProductDtoRequest request) {
         Transaction transaction = null;
         try (Session session =
                      HibernateConfig.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
+
             session.persist(product);
             variant.setProduct(product);
             session.persist(variant);
             session.flush();
+
             transaction.commit();
             LOGGER.info(Status.DATA_INSERT_MSG.getMessage());
-            return Status.DATA_INSERT_MSG.getMessage();
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
                 LOGGER.warn(ErrorMessage.LOG_DB_ERROR_MSG.getMessage());
             }
-            return e.getMessage();
         }
     }
 

@@ -1,6 +1,6 @@
 package org.server.repositories;
 
-import org.server.repository.impl.ProductRepository;
+import org.server.repository.product.ProductRepository;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
