@@ -19,6 +19,6 @@ public interface ProductRepository extends BaseRepository<Product, ProductDtoReq
     void update(Long id, ProductDtoRequest request);
     // Видалення запису за id
     boolean deleteById(Long id);
-    // Отримання останнього запису
+
     Optional<Product> getLastEntity();
 }

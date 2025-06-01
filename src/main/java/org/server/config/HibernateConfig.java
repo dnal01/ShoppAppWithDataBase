@@ -5,7 +5,6 @@ import org.apache.logging.log4j.Logger;
 import org.server.entities.Product;
 import org.server.entities.Variant;
 import org.server.utils.ErrorMessage;
-import org.server.view.AppView;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;

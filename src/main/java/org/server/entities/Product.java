@@ -1,6 +1,7 @@
 package org.server.entities;
 
 import jakarta.persistence.*;
+import org.server.dto.ProductDtoRequest;
 
 import java.util.List;
 
@@ -27,22 +28,22 @@ public class Product {
     private boolean isWeiged;
     @Column(name = "measure")
     private String measureUnit;
+
     @OneToMany(mappedBy = "product")
     private List<Variant> variants;
 
     public Product() {
     }
 
-    public Product(int id, String description, String title, String category, int typeId, int vendorId, int groupById, boolean isWeiged, String measureUnit) {
-        this.id = id;
-        this.description = description;
-        this.title = title;
-        this.category = category;
-        this.typeId = typeId;
-        this.vendorId = vendorId;
-        this.groupById = groupById;
-        this.isWeiged = isWeiged;
-        this.measureUnit = measureUnit;
+    public Product(ProductDtoRequest request) {
+        this.description = request.description();
+        this.title = request.title();
+        this.category = request.category();
+        this.typeId = request.typeId();
+        this.vendorId = request.vendorId();
+        this.groupById = request.groupById();
+        this.isWeiged = request.isWeiged();
+        this.measureUnit = request.measureUnit();
     }
 
     public int getId() {
@@ -101,8 +102,11 @@ public class Product {
     }
     @Override
     public String toString() {
-        return  "id " + id +
-                ", " + description + " " + title +
-                ", " + measureUnit + "\n";
+        return  "Product{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                ", title='" + title + '\'' +
+                ", measureUnit='" + measureUnit + '\'' +
+                '}';
     }
 }

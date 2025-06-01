@@ -105,3 +105,16 @@ java.lang.IllegalStateException: Cannot get a connection as the driver manager i
 2025-05-25 11:13:47.317 [main] ERROR o.s.c.HibernateConfig - DB manipulations error.
 2025-05-25 11:13:47.317 [main] WARN  o.s.r.impl.ProductRepository - DB manipulations error.
 2025-05-25 11:13:47.317 [main] WARN  o.s.s.ProductService - LOG_DATA_INPTS_WRONG_MSG
+2025-06-01 08:53:02.330 [main] INFO  o.h.Version - HHH000412: Hibernate ORM core version 6.6.6.Final
+2025-06-01 08:53:02.352 [main] INFO  o.h.c.internal.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-06-01 08:53:02.399 [main] WARN  o.h.o.connections.pooling - HHH10001002: Using built-in connection pool (not intended for production use)
+2025-06-01 08:53:02.604 [main] INFO  o.h.o.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/demo_db]
+	Database driver: com.mysql.cj.jdbc.Driver
+	Database version: 8.4.5
+	Autocommit mode: false
+	Isolation level: undefined/unknown
+	Minimum pool size: 1
+	Maximum pool size: 20
+2025-06-01 08:53:03.072 [main] INFO  o.s.r.impl.ProductRepository - Product and Variant were added.
+2025-06-01 08:53:03.207 [main] WARN  o.s.r.impl.ProductRepository - DB manipulations error.

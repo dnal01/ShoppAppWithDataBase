@@ -6,6 +6,18 @@ import java.util.UUID;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record ProductDtoRequest(
-        UUID id, String productName, String email
+        String description,
+        String title,
+        String category,
+        int typeId,
+        int vendorId,
+        int groupById,
+        boolean isWeiged,
+        String measureUnit,
+        String media,
+        String barcode,
+        double cost,
+        double margin,
+        double price
 ) {
 }

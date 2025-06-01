@@ -6,12 +6,10 @@ import org.server.config.HibernateConfig;
 import org.server.dto.ProductDtoRequest;
 import org.server.entities.Product;
 import org.server.entities.Variant;
-import org.server.repository.BaseRepository;
 import org.server.utils.ErrorMessage;
 import org.server.utils.Status;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.query.MutationQuery;
 import org.hibernate.query.Query;
 
 import java.util.List;
@@ -25,6 +23,8 @@ public class ProductRepositoryImp implements ProductRepository {
 
     @Override
     public void save(ProductDtoRequest request) {
+        Product product = new Product(request);
+        Variant variant = new Variant(request);
         Transaction transaction = null;
         try (Session session =
                      HibernateConfig.getSessionFactory().openSession()) {
@@ -46,7 +46,7 @@ public class ProductRepositoryImp implements ProductRepository {
     }
 
     @Override
-    public Optional<List<Product>> read() {
+    public Optional<List<Product>> getAll() {
         try (Session session =
                      HibernateConfig.getSessionFactory().openSession()) {
 
@@ -61,83 +61,106 @@ public class ProductRepositoryImp implements ProductRepository {
         }
     }
 
+
     @Override
-    public String update(Product product) {
-        if (readById(product.getId()).isEmpty()) {
-            return Status.DATA_ABSENT_MSG.getMessage();
-        } else {
+    public void update(Long id, ProductDtoRequest request) {
             Transaction transaction = null;
+            Product product = new Product(request);
             try (Session session =
                          HibernateConfig.getSessionFactory().openSession()) {
                 transaction = session.beginTransaction();
-                String hql = "UPDATE Product " +
-                        "SET description = :description, title = :title, category = :category, typeId = :typeId, vendorId = :vendorId, groupById = :groupById, isWeiged = :isWeiged," +
-                        "measureUnit = :measureUnit WHERE id = :id";
-                MutationQuery query = session.createMutationQuery(hql);
-                query.setParameter("description", product.getDescription());
-                query.setParameter("title", product.getTitle());
-                query.setParameter("category", product.getCategory());
-                query.setParameter("typeId", product.getTypeId());
-                query.setParameter("vendorId", product.getVendorId());
-                query.setParameter("groupById", product.getGroupById());
-                query.setParameter("isWeiged", product.getIsWeiged());
-                query.setParameter("measureUnit", product.getMeasureUnit());
-                query.executeUpdate();
+                // Is useful if it is necessary to update entry by specific parameter.
+//                String hql = "UPDATE Product " +
+//                        "SET description = :description, title = :title, category = :category, typeId = :typeId, vendorId = :vendorId, groupById = :groupById, isWeiged = :isWeiged," +
+//                        "measureUnit = :measureUnit WHERE id = :id";
+//                MutationQuery query = session.createMutationQuery(hql);
+//                query.setParameter("description", product.getDescription());
+//                query.setParameter("title", product.getTitle());
+//                query.setParameter("category", product.getCategory());
+//                query.setParameter("typeId", product.getTypeId());
+//                query.setParameter("vendorId", product.getVendorId());
+//                query.setParameter("groupById", product.getGroupById());
+//                query.setParameter("isWeiged", product.getIsWeiged());
+//                query.setParameter("measureUnit", product.getMeasureUnit());
+//                query.executeUpdate();
+                session.persist(product);
+                session.flush();
                 transaction.commit();
                 LOGGER.info(Status.DATA_UPDATE_MSG.getMessage());
-                return Status.DATA_UPDATE_MSG.getMessage();
             } catch (Exception e) {
                 if (transaction != null) {
                     transaction.rollback();
                     LOGGER.warn(ErrorMessage.LOG_DB_ERROR_MSG.getMessage());
                 }
-                return e.getMessage();
             }
         }
-    }
+    
 
     @Override
-    public String delete(int id) {
-        if (readById(id).isEmpty()) {
+    public boolean deleteById(Long id) {
+        if (getById(id).isEmpty()) {
             LOGGER.warn(ErrorMessage.LOG_DB_ERROR_MSG.getMessage());
-            return Status.DATA_ABSENT_MSG.getMessage();
+            return false;
         } else {
             Transaction transaction = null;
             try (Session session =
                          HibernateConfig.getSessionFactory().openSession()) {
                 transaction = session.beginTransaction();
-                String hql = "DELETE FROM Product WHERE id = :id";
-                MutationQuery query = session.createMutationQuery(hql);
-                query.setParameter("id", id);
-                query.executeUpdate();
+                // Is useful if it is necessary to delete entry by not id.
+//                String hql = "DELETE FROM Product WHERE id = :id";
+//                MutationQuery query = session.createMutationQuery(hql);
+//                query.setParameter("id", id);
+//                query.executeUpdate();
+                Optional<Product> product = getById(id);
+                session.remove(product);
                 transaction.commit();
-                return Status.DATA_DELETE_MSG.getMessage();
+                LOGGER.warn(Status.DATA_DELETE_MSG.getMessage());
+                return true;
             } catch (Exception e) {
                 if (transaction != null) {
                     transaction.rollback();
                     LOGGER.warn(ErrorMessage.LOG_DB_ERROR_MSG.getMessage());
                 }
-                return e.getMessage();
+                return false;
             }
         }
     }
 
+
     @Override
-    public Optional<Product> readById(int id) {
-        Transaction transaction = null;
+    public Optional<Product> getById(Long id) {
         Optional<Product> optional;
         try (Session session =
                      HibernateConfig.getSessionFactory().openSession()) {
-
-            String hql = " FROM Product c WHERE c.id = :id";
-            Query<Product> query = session.createQuery(hql, Product.class);
-            query.setParameter("id", id);
-            optional = query.uniqueResultOptional();
+            //Is useful if it is necessary to get entry by not id.
+//            String hql = " FROM Product c WHERE c.id = :id";
+//            Query<Product> query = session.createQuery(hql, Product.class);
+//            query.setParameter("id", id);
+            Product product = session.find(Product.class, id);
+            optional = Optional.ofNullable(product);
             return optional;
+        } catch (Exception e) {
+            LOGGER.warn(ErrorMessage.LOG_DB_ERROR_MSG.getMessage());
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    public Optional<Product> getLastEntity() {
+        Transaction transaction = null;
+        try (Session session = HibernateConfig.getSessionFactory().openSession()) {
+            // Транзакція стартує
+            transaction = session.beginTransaction();
+            Query<Product> query =
+                    session.createQuery("FROM Product ORDER BY id DESC", Product.class);
+            query.setMaxResults(1);
+            Product product = query.uniqueResult();
+            // Транзакція виконується
+            transaction.commit();
+            return Optional.of(product);
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
-                LOGGER.warn(ErrorMessage.LOG_DB_ERROR_MSG.getMessage());
             }
             return Optional.empty();
         }

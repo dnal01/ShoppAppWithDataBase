@@ -1,6 +1,7 @@
 package org.server.entities;
 
 import jakarta.persistence.*;
+import org.server.dto.ProductDtoRequest;
 
 @Entity
 @Table(name = "variants")
@@ -12,7 +13,7 @@ public class Variant {
     @Column(name = "media")
     private String media;
     @Column(name = "barcode")
-    private long barcode;
+    private String barcode;
     @Column(name = "leftovers")
     private int leftovers;
     @Column(name = "cost")
@@ -31,16 +32,12 @@ public class Variant {
 
     public Variant() {
     }
-    public Variant(int id, String media, int barcode, int leftovers, double cost, double margin, double price, int orderLimits, int productId) {
-        this.id = id;
-        this.media = media;
-        this.barcode = barcode;
-        this.leftovers = leftovers;
-        this.cost = cost;
-        this.margin = margin;
-        this.price = price;
-        this.orderLimits = orderLimits;
-//        this.productId = productId;
+    public Variant(ProductDtoRequest request) {
+        this.media = request.media();
+        this.barcode = request.barcode();
+        this.cost = request.cost();
+        this.margin = request.margin();
+        this.price = request.price();
     }
     public int getId() {
         return id;
@@ -54,10 +51,10 @@ public class Variant {
     public void setMedia(String media) {
         this.media = media;
     }
-    public long getBarcode() {
+    public String getBarcode() {
         return barcode;
     }
-    public void setBarcode(long barcode) {
+    public void setBarcode(String barcode) {
         this.barcode = barcode;
     }
     public int getLeftovers() {
@@ -90,9 +87,7 @@ public class Variant {
     public void setOrderLimits(int orderLimits) {
         this.orderLimits = orderLimits;
     }
-//    public int getProductId() {
-//        return productId;
-//    }
+
     public void setProduct(Product product) {
         this.product = product;
     }

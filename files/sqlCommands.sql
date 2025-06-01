@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS variants
 (
     id MEDIUMINT NOT NULL AUTO_INCREMENT,
     media VARCHAR(16) NOT NULL,
-    barcode TINYINT NOT NULL,
+    barcode VARCHAR(20) NOT NULL,
     #     expire_date DATE NOT NULL, (several expire_dates based on deliveries)
     #     deliveries
     #     Inventories
