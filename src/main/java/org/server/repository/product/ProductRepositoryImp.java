@@ -83,7 +83,8 @@ public class ProductRepositoryImp implements ProductRepository {
 //                query.setParameter("isWeiged", product.getIsWeiged());
 //                query.setParameter("measureUnit", product.getMeasureUnit());
 //                query.executeUpdate();
-                session.persist(product);
+                product.setId(id);
+                session.merge(product);
                 session.flush();
                 transaction.commit();
                 LOGGER.info(Status.DATA_UPDATE_MSG.getMessage());
@@ -112,7 +113,9 @@ public class ProductRepositoryImp implements ProductRepository {
 //                query.setParameter("id", id);
 //                query.executeUpdate();
                 Optional<Product> product = getById(id);
-                session.remove(product);
+                if (product.isPresent()) {
+                    session.remove(product.get());
+                }
                 transaction.commit();
                 LOGGER.warn(Status.DATA_DELETE_MSG.getMessage());
                 return true;
